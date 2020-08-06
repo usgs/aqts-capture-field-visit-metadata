@@ -22,7 +22,7 @@ pipeline {
       }
       steps {
         sh '''
-          curl ${SHADED_JAR_ARTIFACT_URL} -Lo aqts-capture-ts-field-visit-aws.jar
+          curl ${SHADED_JAR_ARTIFACT_URL} -Lo aqts-capture-field-visit-metadata-aws.jar
           ls -al
           npm install
           ls -al

@@ -1,5 +1,5 @@
 {
-  "name": "aqts-capture-ts-field-visit",
+  "name": "aqts-capture-field-visit-metadata",
   "description": "Deployment via serverless",
   "dependencies": {
     "serverless": "1.76.1",
