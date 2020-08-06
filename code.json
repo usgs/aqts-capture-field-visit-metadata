@@ -1,8 +1,8 @@
 [
   {
-    "name": "AQTS Capture Discrete Preprocess",
+    "name": "AQTS Capture PreProcess Discrete Groundwater Metadata",
     "organization": "U.S. Geological Survey",
-    "description": "Splits discrete data up into individual time steps.",
+    "description": "Splits discrete groundwater metadata up into denormalized tables.",
     "version": "0.2.${revision}",
     "status": "Development",
 
@@ -11,15 +11,15 @@
       "licenses": [
         {
           "name": "Public Domain, CC0-1.0",
-          "URL": "https://github.com/usgs/aqts-capture-ts-field-visit/blob/master/LICENSE.md"
+          "URL": "https://github.com/usgs/aqts-capture-field-visit-metadata/blob/master/LICENSE.md"
         }
       ]
     },
 
-    "homepageURL": "https://github.com/usgs/aqts-capture-ts-field-visit",
-    "downloadURL": "https://github.com/usgs/aqts-capture-ts-field-visit/archive/master.zip",
-    "disclaimerURL": "https://github.com/usgs/aqts-capture-ts-field-visit/blob/master/LICENSE.md",
-    "repositoryUrl": "https://github.com/usgs/aqts-capture-ts-field-visit.git",
+    "homepageURL": "https://github.com/usgs/aqts-capture-field-visit-metadata",
+    "downloadURL": "https://github.com/usgs/aqts-capture-field-visit-metadata/archive/master.zip",
+    "disclaimerURL": "https://github.com/usgs/aqts-capture-field-visit-metadata/blob/master/LICENSE.md",
+    "repositoryUrl": "https://github.com/usgs/aqts-capture-field-visit-metadata.git",
     "vcs": "git",
 
     "laborHours": null,
@@ -41,7 +41,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2020-05-18"
+      "metadataLastUpdated": "2020-08-06"
     }
   }
 ]

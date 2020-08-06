@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gov.usgs.wma.waterdata</groupId>
-    <artifactId>aqts-capture-field-visit-by-loc</artifactId>
+    <artifactId>aqts-capture-field-visit-metadata</artifactId>
     <version>0.1.${revision}</version>
     <packaging>jar</packaging>
 
@@ -173,7 +173,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
-                    <finalName>aqts-capture-field-visit-by-loc-aws</finalName>
+                    <finalName>aqts-capture-field-visit-metadata-aws</finalName>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                 </configuration>
