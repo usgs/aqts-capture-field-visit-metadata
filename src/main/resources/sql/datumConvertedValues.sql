@@ -3,7 +3,6 @@ insert into datum_converted_values (
   field_visit_identifier,
   target_datum,
   unit,
-  numeric_value,
   display_value,
   partition_number
 )
@@ -12,7 +11,6 @@ select
   jsonb_extract_path_text(b.reading, 'FieldVisitIdentifier') field_visit_identifier,
   jsonb_extract_path_text(b.datum_converted_value, 'TargetDatum') target_datum,
   jsonb_extract_path_text(b.datum_converted_value, 'Unit') unit,
-  jsonb_extract_path_text(b.datum_converted_value, 'Numeric')::numeric numeric_value,
   jsonb_extract_path_text(b.datum_converted_value, 'Display') display_value,
   b.partition_number
   from (

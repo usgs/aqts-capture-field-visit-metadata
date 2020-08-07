@@ -1,11 +1,10 @@
-insert into schema_name.field_visit_readings_by_loc (
+insert into field_visit_readings_by_loc (
   json_data_id,
   field_visit_identifier,
   control_condition,
   approval_level,
   approval_level_description,
   unit,
-  numeric_value,
   display_value,
   uncertainty_type,
   quantitative_uncertainty,
@@ -33,7 +32,6 @@ select
   jsonb_extract_path_text(b.approval, 'ApprovalLevel') approval_level,
   jsonb_extract_path_text(b.approval, 'LevelDescription') approval_level_description,
   jsonb_extract_path_text(b.reading, 'Value', 'Unit') unit,
-  jsonb_extract_path_text(b.reading, 'Value', 'Numeric')::numeric numeric_value,
   jsonb_extract_path_text(b.reading, 'Value', 'Display') display_value,
   jsonb_extract_path_text(b.uncertainty, 'UncertaintyType') uncertainty_type,
   jsonb_extract_path_text(b.uncertainty, 'QuantitativeUncertainty', 'Display') quantitative_uncertainty,
@@ -67,7 +65,7 @@ select
           jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Approval') as approval,
           jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Uncertainty') as uncertainty,
           jd.partition_number
-      from schema_name.json_data jd
+      from json_data jd
       where json_data_id = ?
       and partition_number = ?
     ) a

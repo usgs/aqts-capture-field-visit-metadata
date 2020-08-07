@@ -1,9 +1,10 @@
-# Aquarius Timeseries (AQTS) Capture Field Visit Metadata
+# Aquarius Timeseries (AQTS) Capture Field Visit Readings By Location
 
 [![Build Status](https://travis-ci.com/usgs/aqts-capture-field-visit-metadata.svg?branch=master)](https://travis-ci.com/usgs/aqts-capture-field-visit-metadata)
 [![codecov](https://codecov.io/gh/usgs/aqts-capture-field-visit-metadata/branch/master/graph/badge.svg)](https://codecov.io/gh/usgs/aqts-capture-field-visit-metadata)
 
-Processes ground water level metadata from the transform database for use by the aqts-capture-etl.
+This project transforms data from the Aquarius GetFieldVisitReadingsByLocation api call into intermediate tables meant to be used by the aqts-capture-etl
+for further processing. The source is the json_data table.
 
 ## Testing
 This project contains JUnit tests. Maven can be used to run them (in addition to the capabilities of your IDE).
