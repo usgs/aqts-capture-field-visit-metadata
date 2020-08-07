@@ -1,0 +1,94 @@
+service: aqts-capture-field-visit-metadata
+
+provider:
+  name: aws
+  region: ${opt:region, 'us-west-2'}
+  stage: ${opt:stage, 'TEST'}
+  runtime: java11
+  memorySize: 768
+  timeout: 90
+  logRetentionInDays: 30
+  deploymentBucket:
+    name: iow-cloud-applications
+  stackTags:
+    "wma:applicationId": "AQTS Capture Field Visit Metadata"
+    "wma:contact": "Jim Kreft jkreft@usgs.gov"
+    "wma:environment": ${self:provider.stage}
+    "wma:taggingVersion": ${opt:taggingVersion}
+    "wma:costCenter": TBD
+    commitIdentifier: ${git:sha1}
+
+custom:
+  exportGitVariables: false
+  accountNumber : ${ssm:/iow/aws/accountNumber}
+  vpc:
+    securityGroupIds: ${ssm:/iow/retriever-capture/${self:provider.stage}/securityGroupIds~split}
+    subnetIds: ${ssm:/iow/aws/vpc/${self:provider.stage}/subnetIds~split}
+  db:
+    connectInfo: ${ssm:/aws/reference/secretsmanager/NWCAPTURE-DB-${self:provider.stage}~true}
+
+functions:
+  preProcess:
+    handler: gov.usgs.wma.waterdata.ProcessFieldVisitHandler
+    role: arn:aws:iam::${self:custom.accountNumber}:role/csr-Lambda-Role
+    environment:
+      FUNCTION_NAME: processFieldVisit
+      AWS_DEPLOYMENT_REGION: ${self:provider.region}
+      AQTS_DATABASE_ADDRESS: ${self:custom.db.connectInfo.DATABASE_ADDRESS}
+      AQTS_DATABASE_PORT: ${self:custom.db.connectInfo.DATABASE_PORT}
+      AQTS_SCHEMA_NAME: ${self:custom.db.connectInfo.SCHEMA_NAME}
+      AQTS_SCHEMA_OWNER_USERNAME: ${self:custom.db.connectInfo.SCHEMA_OWNER_USERNAME}
+      AQTS_DATABASE_NAME: ${self:custom.db.connectInfo.DATABASE_NAME}
+      AQTS_SCHEMA_OWNER_PASSWORD: ${self:custom.db.connectInfo.SCHEMA_OWNER_PASSWORD}
+      ROOT_LOG_LEVEL: INFO
+    vpc: ${self:custom.vpc}
+
+resources:
+  Resources:
+    snsTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${self:service}-${self:provider.stage}-topic
+        TopicName: ${self:service}-${self:provider.stage}-topic
+    concurrencyAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmName: ${self:service}-${self:provider.stage}-concurrency-alarm
+        AlarmDescription: Notify when concurrency exceeds the specified threshold
+        Namespace: 'AWS/Lambda'
+        Dimensions:
+          - Name: FunctionName
+            Value:
+              Ref: PreProcessLambdaFunction
+        MetricName: ConcurrentExecutions
+        Statistic: Maximum
+        ComparisonOperator: GreaterThanOrEqualToThreshold
+        Threshold: 150
+        Period: 60
+        EvaluationPeriods: 1
+        AlarmActions:
+          - Ref: snsTopic
+    errorAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmName: ${self:service}-${self:provider.stage}-error-alarm
+        AlarmDescription: Notify when number of errors exceeds the specified threshold
+        Namespace: 'AWS/Lambda'
+        Dimensions:
+          - Name: FunctionName
+            Value:
+              Ref: PreProcessLambdaFunction
+        MetricName: Errors
+        Statistic: Sum
+        ComparisonOperator: GreaterThanOrEqualToThreshold
+        Threshold: 10
+        Period: 60
+        EvaluationPeriods: 1
+        AlarmActions:
+          - Ref: snsTopic
+
+plugins:
+  - serverless-plugin-git-variables
+
+package:
+  artifact: aqts-capture-field-visit-metadata-aws.jar
