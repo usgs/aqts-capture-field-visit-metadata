@@ -32,7 +32,7 @@ functions:
     handler: gov.usgs.wma.waterdata.ProcessFieldVisitHandler
     role: arn:aws:iam::${self:custom.accountNumber}:role/csr-Lambda-Role
     environment:
-      FUNCTION_NAME: processFieldVisit
+      FUNCTION_NAME: preProcess
       AWS_DEPLOYMENT_REGION: ${self:provider.region}
       AQTS_DATABASE_ADDRESS: ${self:custom.db.connectInfo.DATABASE_ADDRESS}
       AQTS_DATABASE_PORT: ${self:custom.db.connectInfo.DATABASE_PORT}
