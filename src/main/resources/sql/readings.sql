@@ -23,7 +23,8 @@ insert into field_visit_readings_by_loc (
   reading_type,
   reference_point_unique_id,
   use_location_datum_as_reference,
-  partition_number
+  partition_number,
+  location_identifier
 )
 select
   b.json_data_id,
@@ -50,21 +51,24 @@ select
   jsonb_extract_path_text(b.reading, 'reading_type') reading_type,
   jsonb_extract_path_text(b.reading, 'ReferencePointUniqueId') reference_point_unique_id,
   jsonb_extract_path_text(b.reading, 'UseLocationDatumAsReference') use_location_datum_as_reference,
-  b.partition_number
+  b.partition_number,
+  b.location_identifier
   from (
     select
       a.json_data_id,
       a.approval,
       field_visit_readings reading,      
       a.uncertainty,
-      a.partition_number
+      a.partition_number,
+      a.location_identifier
       from (
         select
           jd.json_data_id,
           jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')) as field_visit_readings,
           jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Approval') as approval,
           jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Uncertainty') as uncertainty,
-          jd.partition_number
+          jd.partition_number,
+          jsonb_extract_path_text(jd.parameters, 'locationIdentifier') location_identifier
       from json_data jd
       where json_data_id = ?
       and partition_number = ?
