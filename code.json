@@ -3,7 +3,7 @@
     "name": "AQTS Capture PreProcess Discrete Groundwater Metadata",
     "organization": "U.S. Geological Survey",
     "description": "Splits discrete groundwater metadata up into denormalized tables.",
-    "version": "0.2.${revision}",
+    "version": "0.3.${revision}",
     "status": "Development",
 
     "permissions": {
