@@ -64,9 +64,9 @@ select
       from (
         select
           jd.json_data_id,
-          jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')) as field_visit_readings,
-          jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Approval') as approval,
-          jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')), 'Uncertainty') as uncertainty,
+          jsonb_array_elements(jsonb_extract_path(jsonb_extract_path(jd.json_content, 'FieldVisitReadingsResponse'), 'FieldVisitReadings')) as field_visit_readings,
+          jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jsonb_extract_path(jd.json_content, 'FieldVisitReadingsResponse'), 'FieldVisitReadings')), 'Approval') as approval,
+          jsonb_extract_path(jsonb_array_elements(jsonb_extract_path(jsonb_extract_path(jd.json_content, 'FieldVisitReadingsResponse'), 'FieldVisitReadings')), 'Uncertainty') as uncertainty,
           jd.partition_number,
           jsonb_extract_path_text(jd.parameters, 'locationIdentifier') location_identifier
       from json_data jd

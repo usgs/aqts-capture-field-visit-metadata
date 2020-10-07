@@ -23,7 +23,7 @@ select
       from (
         select
           jd.json_data_id,
-          jsonb_array_elements(jsonb_extract_path(jd.json_content, 'FieldVisitReadings')) as field_visit_readings,
+          jsonb_array_elements(jsonb_extract_path(jsonb_extract_path(jd.json_content, 'FieldVisitReadingsResponse'), 'FieldVisitReadings')) as field_visit_readings,
           jd.partition_number
       from json_data jd
       where json_data_id = ?
