@@ -2,7 +2,7 @@
   "name": "aqts-capture-field-visit-metadata",
   "description": "Deployment via serverless",
   "dependencies": {
-    "serverless": "2.1.1",
+    "serverless": "2.6.0",
     "serverless-plugin-git-variables": "^4.0.0"
   }
 }
