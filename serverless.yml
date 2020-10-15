@@ -16,6 +16,8 @@ provider:
     "wma:environment": ${self:provider.stage}
     "wma:taggingVersion": ${opt:taggingVersion}
     "wma:costCenter": TBD
+    "wma:organization": IOW
+    "displayName": "FV Metadata"
     commitIdentifier: ${git:sha1}
 
 custom:
