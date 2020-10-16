@@ -3,3 +3,5 @@ aqts-capture-field-visit-metadata.iml
 .idea/
 target/
 aqts-capture-field-visit-by-loc.iml
+.serverless/
+node_modules/

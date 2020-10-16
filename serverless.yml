@@ -9,7 +9,7 @@ provider:
   timeout: 90
   logRetentionInDays: 90
   deploymentBucket:
-    name: iow-cloud-applications
+    name: ${opt:bucket, iow-cloud-applications}
   stackTags:
     "wma:applicationId": "AQTS Capture Field Visit Metadata"
     "wma:contact": "Jim Kreft jkreft@usgs.gov"
@@ -22,7 +22,6 @@ provider:
 
 custom:
   exportGitVariables: false
-  accountNumber : ${ssm:/iow/aws/accountNumber}
   vpc:
     securityGroupIds: ${ssm:/iow/retriever-capture/${self:provider.stage}/securityGroupIds~split}
     subnetIds: ${ssm:/iow/aws/vpc/${self:provider.stage}/subnetIds~split}
@@ -32,7 +31,7 @@ custom:
 functions:
   preProcess:
     handler: gov.usgs.wma.waterdata.ProcessFieldVisitHandler
-    role: arn:aws:iam::${self:custom.accountNumber}:role/csr-Lambda-Role
+    role: arn:aws:iam::#{AWS::AccountId}:role/csr-Lambda-Role
     environment:
       FUNCTION_NAME: preProcess
       AWS_DEPLOYMENT_REGION: ${self:provider.region}
@@ -91,6 +90,7 @@ resources:
 
 plugins:
   - serverless-plugin-git-variables
+  - serverless-pseudo-parameters
 
 package:
   artifact: aqts-capture-field-visit-metadata-aws.jar
