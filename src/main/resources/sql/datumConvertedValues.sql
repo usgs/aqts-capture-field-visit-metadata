@@ -1,6 +1,7 @@
 insert into datum_converted_values (
   json_data_id,
   field_visit_identifier,
+  field_visit_time,
   target_datum,
   unit,
   display_value,
@@ -9,6 +10,7 @@ insert into datum_converted_values (
 select
   b.json_data_id,
   jsonb_extract_path_text(b.reading, 'FieldVisitIdentifier') field_visit_identifier,
+  adjust_timestamp(jsonb_extract_path_text(b.reading, 'Time')) field_visit_time,
   jsonb_extract_path_text(b.datum_converted_value, 'TargetDatum') target_datum,
   jsonb_extract_path_text(b.datum_converted_value, 'Unit') unit,
   jsonb_extract_path_text(b.datum_converted_value, 'Display') display_value,
