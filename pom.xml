@@ -10,7 +10,6 @@
     <properties>
         <java.version>11</java.version>
         <revision>0-DEFAULT</revision>
-        <wma.maven.url>https://artifactory.wma.chs.usgs.gov/artifactory</wma.maven.url>
     </properties>
 
     <licenses>
