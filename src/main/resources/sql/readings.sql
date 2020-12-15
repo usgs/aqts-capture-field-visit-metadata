@@ -48,7 +48,7 @@ select
   jsonb_extract_path_text(b.reading, 'Publish') publish,
   jsonb_extract_path_text(b.reading, 'GradeCode') grade_code,
   jsonb_extract_path_text(b.reading, 'Qualifiers')::text qualifiers,
-  jsonb_extract_path_text(b.reading, 'reading_type') reading_type,
+  jsonb_extract_path_text(b.reading, 'ReadingType') reading_type,
   jsonb_extract_path_text(b.reading, 'ReferencePointUniqueId') reference_point_unique_id,
   jsonb_extract_path_text(b.reading, 'UseLocationDatumAsReference') use_location_datum_as_reference,
   b.partition_number,
