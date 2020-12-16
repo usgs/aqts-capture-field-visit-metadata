@@ -17,7 +17,9 @@ provider:
   deploymentBucket:
     name: ${opt:bucket, iow-cloud-applications}
   stackTags:
-    "wma:applicationId": "AQTS Capture Field Visit Metadata"
+    "wma:project_id": "aqtscapture"
+    "wma:subSystem": "aqtscapture"
+    "wma:application_id": "AQTS Capture Field Visit Metadata"
     "wma:contact": "Jim Kreft jkreft@usgs.gov"
     "wma:environment": ${self:provider.stage}
     "wma:taggingVersion": ${opt:taggingVersion}
