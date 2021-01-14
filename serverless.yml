@@ -38,11 +38,6 @@ custom:
     subnetIds: ${ssm:/iow/aws/vpc/${self:provider.stage}/subnetIds~split}
   db:
     connectInfo: ${ssm:/aws/reference/secretsmanager/NWCAPTURE-DB-${self:provider.stage}~true}
-  esLogs:
-    endpoint: ${ssm:/iow/aws/vpc/${self:provider.stage}/elasticsearchEndpoint}
-    index: ${self:service}
-    retentionInDays: 90
-    filterPattern: '?Exception ?ERROR ?WARN'
 
 functions:
   preProcess:
@@ -111,7 +106,6 @@ resources:
 plugins:
   - serverless-plugin-git-variables
   - serverless-prune-plugin
-  - serverless-es-logs
 
 package:
   artifact: aqts-capture-field-visit-metadata-aws.jar
